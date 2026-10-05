@@ -1,0 +1,78 @@
+import java.util.Random;
+import java.util.Scanner;
+
+public class GameDadu {
+    public void tampilkanWelcome() {
+        System.out.println("=======================================");
+        System.out.println("   Selamat Datang di Permainan Dadu!   ");
+        System.out.println("=======================================");
+        System.out.println("Peraturan: ");
+        System.out.println("1. Tekan tombol ENTER untuk mendapatkan skor");
+        System.out.println("2. Hasil dadu merupakan jumlah skor yang didapatkan");
+        System.out.println("3. Hasil dadu 6 akan mendapatkan skor 2x");
+        System.out.println("4. Hasil dadu 1 akan mendapatkan skor 0");
+        System.out.println("5. Jumlah skor tiap ronde akan dijumlah ketika selesai \n");
+    }
+    public void tampilkanSkorAkhir(String nama, int skor) {
+        System.out.println("\n--- SELESAI ---");
+        System.out.println("Nama Pemain : " + nama);
+        System.out.println("Total Skor  : " + skor);
+        System.out.println("=======================================");
+    }
+    public static int kocokDadu() {
+        Random rand = new Random();
+        return rand.nextInt(6) + 1;
+    }
+    public static int hitungBonus(int angkaDadu) {
+        if (angkaDadu == 6) {
+            return 6;
+        } else if (angkaDadu == 1) {
+            return -1;
+        } else {
+            return 0;
+        }
+    }
+    public static void main(String[] args) {
+        System.out.println("Tugas - Modul 4");
+        System.out.println("Kelompok 29 Shift 5");
+        System.out.println("Ibnu Gavin Aufa     (21120126120001)");
+        System.out.println("Farel Nurahman      (21120126130091)");
+        System.out.println("Keysyana Zabrilatan (21120126140118)");
+        System.out.println("Hardi Andriarifin   (21120126140184)\n");
+
+        Scanner input = new Scanner(System.in);
+        GameDadu game = new GameDadu();
+        game.tampilkanWelcome();
+
+        System.out.print("Masukkan nama: ");
+        String namaPemain = input.nextLine();
+
+        System.out.print("Berapa kali untuk mengocok dadu? : ");
+        int jumlahKocokan = input.nextInt();
+        int totalSkor = 0;
+
+        for (int i = 1; i <= jumlahKocokan; i++) {
+            System.out.println("\nKocokan ke-" + i + ":");
+            System.out.print("Tekan ENTER untuk mengocok...");
+            input.nextLine();
+            if(i == 1) input.nextLine();
+
+            int hasilDadu = kocokDadu();
+            System.out.println("-> Angka dadu yang keluar: " + hasilDadu);
+
+            int bonus = hitungBonus(hasilDadu);
+
+            int skorRonde = hasilDadu + bonus;
+            totalSkor += skorRonde;
+
+            if (bonus > 0) {
+                System.out.println("Luar biasa! Mendapatkan bonus 2x skor!");
+            } else if (bonus < 0) {
+                System.out.println("Haduh! Skor yang didapatkan nol!");
+            }
+            System.out.println("Skor ronde ini: " + skorRonde);
+        }
+        game.tampilkanSkorAkhir(namaPemain, totalSkor);
+        input.close();
+    }
+}
